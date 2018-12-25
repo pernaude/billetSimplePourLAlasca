@@ -3,8 +3,9 @@
  * Class Dbase
  * cette classe permet de créer des requêtes SQL faciles avec PDO
  */
-class DB{
+class Dbase{
     private $db;
+    private $countRequest;
     /**
      * Connection à la base de données
      * @param $dbhost
@@ -22,9 +23,13 @@ class DB{
      * @return PDOStatement ( Retourne un Objet PDO )
      */
     private function exec($request, $values = null){
+        try{
         $req = $this->db->prepare($request);
         $req->execute($values);
         return $req;
+         }catch(PDOException $error){
+        echo $error->getMessage();
+        }
     }
     /**
      * Definit le mode de récupération des données
@@ -32,6 +37,7 @@ class DB{
      */
     public function setFetchMode($fetchMode){
         $this->db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, $fetchMode);
+        $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
     /**
      * Execute une requête SQL et retourne l'état
@@ -40,8 +46,13 @@ class DB{
      * @return bool ( Retoune un boolean donc true ou false )
      */
     public function execute($request, $values = array()){
+        try{
         $results = self::exec($request, $values);
+        $this -> countRequest = $results-> rowCount();
         return ($results) ? true : false;
+    }catch(PDOException $error){
+        echo $error->getMessage();
+        }
     }
     /**
      * Execute une requête SQL et retourne des lignes de données
@@ -53,5 +64,9 @@ class DB{
     public function fetch($request, $values = null, $all = true) {
         $results = self::exec($request, $values);
         return ($all) ? $results->fetchAll() : $results->fetch();
+    }
+
+    public function getCountRequest(){
+        return ($this -> countRequest);
     }
 }

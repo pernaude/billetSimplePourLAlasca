@@ -1,0 +1,22 @@
+body{
+margin:0;
+padding:0;
+width:100%;
+font-weight:400;
+font-family: 'Quicksand', sans-serif;
+}
+.blankpage{background:#fff;}
+div,h2,h1,h3,h4,h5,h6,p{box-sizing:border-box;}
+*{box-sizing:border-box;font-family: 'Quicksand', sans-serif;}
+a{text-decoration:none;}
+ul{
+margin:0;
+padding:0;
+list-style-type:none;
+}
+.left{float:left;}.right{float:right;}.clear{clear:both;}.aleft{text-align:left;}.aright{text-align:right;}.acenter{text-align:center;}.justify{text-align:justify;}.pagemenu{max-width:95%;margin:0 auto;}.page{max-width:980px;margin:0 auto;}
+div{box-sizing:border-box;}
+input{
+font-family: 'Didact Gothic', sans-serif;
+font-family: 'Quattrocento Sans', sans-serif;
+}

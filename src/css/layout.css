@@ -1,0 +1,307 @@
+#header{
+	position:fixed;
+	background-color:rgba(0,0,0,0.8);
+	top:0;right:0;bottom:0;left:0;
+	display: none;
+	z-index: 2000;
+}
+#topMenuWrapper{
+	overflow:hidden;
+	overflow-y: auto;
+	text-align: center;
+	position: absolute;
+	top: 0; right: 0; bottom: 0; left: 0;
+}
+#sortFortForClose{
+	position: absolute;
+	top: 0; right: 0; bottom: 0; left: 0;
+}
+#menuSingleBloc{
+	display:inline-block;
+	min-width: 450px;
+	max-width: 450px;
+	background-color: #333333;
+	padding: 20px;
+	position: relative;
+	left: -100%;
+}
+#menuAllSlideDown, #menuAllSlideDown li{
+	display: block;
+	text-align: left;
+}
+.menusetLk{
+	color: #fff;
+	padding: 20px 10px;
+	display: block;
+	font-size: 22px;
+	border-bottom: 1px solid #555;
+	transition: 0.8s;
+}
+#menuAllSlideDown li a:hover, #menuBigShow li a:hover{
+color: #de3535;
+}
+#menuActuelContener{
+border-bottom: 1px solid #c0c0c0;
+position: fixed;
+left: 0; right: 0; top: 0;
+background-color: #fff;
+}
+#actualMenuShow{
+	display: inline-block;
+	font-size: 25px;
+	color: #555;
+	padding: 20px;
+	background-color: #ededed;
+	margin-top: 20px;
+	border-radius: 0 5px 0 0;
+
+}
+#globalContainer{
+	padding-top: 70px;
+}
+.closeButtBox{
+	font-size:70px;
+	color:#f8f8f8;
+	text-align: right;
+	display: block;
+}
+.boxPartUnik{
+	display:none;
+}
+.theContainerInside{
+	padding:50px 0;
+	max-width:900px;
+	margin: 0 auto;
+}
+#actionBoxWrapper{
+	text-align: center;
+}
+#menuBigShow{
+	display: inline-block;
+	text-align: left;
+}
+#menuBigShow li{
+	width:100%;
+	display:block;
+}
+
+#menuBigShow li a{
+	display: block;
+	width:100%;
+	color:#0071a6;
+	padding:20px;
+	font-size: 1.2em;
+	border-bottom: 1px solid #dedfde;
+    transition: 0.8s;
+}
+
+.putDisplayNeet{
+	display:block;
+	width: 100%;
+	padding: 15px;
+	border:none;
+	border-bottom: 1px solid #c0c0c0;
+	color:#333;
+	font-size: 15px;
+	outline: none;
+}
+.textareaShape{
+	height: 250px;
+	resize: none;
+	resize: vertical;
+	background-color: #f8f8f8;
+}
+.putDisplayNeet:focus{
+	border-bottom: 1px solid #0071a6;
+
+}
+label{
+	margin-bottom: 5px;
+	display: block;
+}
+.halfWidth{
+	display: inline-block;
+	width:50%;
+}
+.buttStyleBlue{
+	color: #fff;
+	display: block;
+	width:100%;
+	background-color: #0091d6;
+	padding:15px;
+	border-radius: 3px;
+	text-align: center;
+	font-size:20px;
+	border: none;
+	cursor: pointer;
+	outline: none;
+	transition: 0.8s;
+}
+.buttStyleBlue:hover{
+	background-color: #0071a6;
+}
+.noErrorCl{
+	color:#24a524;
+	background-color: #85ef85;
+	padding: 20px;
+	border-left: 4px solid #24a524;
+	font-size: 15px;
+	text-align: center;
+	margin-bottom: 20px;
+	display: none;
+}
+.errorCover{
+	height:40px;
+	overflow:hidden;
+	margin-bottom: 10px;
+
+}
+.errorGet{
+	color:#f00;
+	background-color: #ffb7b7;
+	padding: 10px;
+	font-size: 12px;
+	text-align: center;
+	display: none;
+	border-left: 1px solid #f00;
+	border-right: 1px solid #f00;
+}
+.leftWrapper{
+	padding: 0 20px 0 0;
+}
+.rightWrapper{
+	padding: 0 0 0 20px;
+}
+.lineWrapperDisplay{
+	text-align: left;
+	padding: 15px;
+	border-bottom: 1px solid #efefef;
+}
+.lineWrapperDisplay span, .lineWrapperDisplay a{
+	display: inline-block;
+
+}
+.lineWrapperDisplay a{
+	padding:5px 10px;
+	color: #fff;
+	border-radius: 20px;
+	font-size: 13px;
+}
+.chapTitleCover{
+	font-size: 14px;
+	line-height:20px;
+	display:block;
+	text-align: left;
+	margin-right: 220px;
+	margin-left: 130px;
+
+}
+.chapNumberCover{
+	width: 130px;
+	color:#0071a6;
+	font-weight: 700;
+	float:left;
+}
+.chapActionCover{
+	width:220px;
+	text-align: right;
+	float: right;
+
+}
+.actionMessage{
+	display:none;
+}
+.actionButtSingle-modif{
+	background-color: #0071c6;
+}
+.actionButtSingle-del{
+	background-color: #de5464;
+}
+#messageDisplayCover{
+	background-color: rgba(255, 255, 255, 0.7);
+	position: fixed;
+	top: 0; right: 0; bottom: 0; left: 0;
+	z-index: 2005;
+	text-align: center;
+	display: none;
+}
+#messageDisplayLoad {
+    position:absolute;
+    width:100%;
+    left:0;right:0;top:0;bottom:0;
+    display: none;
+}
+
+@-webkit-keyframes spin {
+	from {-webkit-transform:rotate(0deg);}
+	to {-webkit-transform:rotate(360deg);}
+}
+
+@keyframes spin {
+	from {transform:rotate(0deg);}
+	to {transform:rotate(360deg);}
+}
+@-webkit-keyframes shakeMini {
+	from {-webkit-transform:rotate(0deg);}
+	25% {-webkit-transform:rotate(5deg);}
+	50% {-webkit-transform:rotate(0deg);}
+	75% {-webkit-transform:rotate(-5deg);}
+	100% {-webkit-transform:rotate(5deg);}
+}
+
+@keyframes shakeMini {
+	from {transform:rotate(0deg);}
+	25% {transform:rotate(5deg);}
+	50% {transform:rotate(0deg);}
+	75% {transform:rotate(-5deg);}
+	100% {transform:rotate(5deg);}
+}
+#messageDisplayLoad::after {
+    content:'';
+    display:block;
+    position:absolute;
+    left:48%;top:40%;
+    width:40px;height:40px;
+    border-style:solid;
+    border-color:#0071a6;
+    border-top-color:transparent;
+    border-width: 4px;
+    border-radius:50%;
+    -webkit-animation: spin .8s linear infinite;
+    animation: spin .8s linear infinite;
+}
+#messageDisplayConfirm{
+	position: relative;
+	z-index: 2008;
+	display: none;
+	max-width:450px;
+	padding: 20px;
+	background-color: #fff;
+	border-radius: 5px;
+	box-shadow: 0 0 5px #c0c0c0;
+	color: #333;
+	margin-top: 10%;
+}
+.shakeBox{
+    -webkit-animation: shakeMini .5s linear;
+    animation: shakeMini .5s linear;
+}
+.actionConfirmButt{
+	display: inline-block;
+	padding: 8px 10px;
+	border-radius: 3px;
+	color: #fff;
+	font-size: 13px;
+}
+.theNegativeAns{
+	background-color: #dedfde;
+}
+.thePositiveAns{
+	background-color: #0071a6;
+}
+#messageDisplayActionButt{
+	text-align: right;
+	padding-top: 10px;
+	border-top: 1px solid #dedfde;
+	margin-top: 20px;
+}

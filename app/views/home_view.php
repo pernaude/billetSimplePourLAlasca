@@ -11,7 +11,14 @@
 
     <?php include_once 'app/views/parts/header.php'?>
 
-    <!-- CONTENU DU PAGE DEMANDEE -->
+    <div id="container">
+    	<section class="sectionCl" id="homeDisplay"></section>
+    	<section class="sectionCl" id="reaminingDisplay"></section>
+
+
+
+
+    </div>
 
     <?php include_once 'app/views/parts/footer.php'?>
 
