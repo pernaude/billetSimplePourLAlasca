@@ -11,6 +11,7 @@ class Chapter {
 	
 	
 	private $chapId;
+	private $chapNumberPlace;
 	private $chapTitle;
 	private $chapSummary;
 	private $chapContent;
@@ -35,6 +36,7 @@ class Chapter {
 
 
 			$this -> chapTitle = $retrievedTrack['chap_title'];
+			$this -> chapNumberPlace = $retrievedTrack['chap_number'];
 			$this -> chapSummary = $retrievedTrack['chap_summary'];
 			$this -> chapContent = $retrievedTrack['chap_content'];
 			$this -> chapAuthor = $retrievedTrack['chap_author'];
@@ -48,6 +50,7 @@ class Chapter {
 
 
 			}catch(PDOException $error){
+
 			$this -> errorCatch = 1;
 		}
 			
@@ -178,6 +181,9 @@ class Chapter {
 	public function getChapTitle(){
 
 		return ($this -> chapTitle);
+	}
+	public function getchapNumberPlace(){
+		return ($this -> chapNumberPlace);
 	}
 	public function getChapSummary(){
 

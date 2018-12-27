@@ -8,6 +8,20 @@ font-family: 'Quicksand', sans-serif;
 .blankpage{background:#fff;}
 div,h2,h1,h3,h4,h5,h6,p{box-sizing:border-box;}
 *{box-sizing:border-box;font-family: 'Quicksand', sans-serif;}
+*::-webkit-scrollbar {
+  width: 10px;
+}
+*::-webkit-scrollbar-track {
+  background: #777; 
+  padding: 0 2px;
+}
+*::-webkit-scrollbar-thumb {
+  background: #a2a2a2; 
+  border-radius: 5px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: #333; 
+}
 a{text-decoration:none;}
 ul{
 margin:0;

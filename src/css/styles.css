@@ -2,9 +2,11 @@
 position: fixed;
 z-index: 2000;
 top: 0; right: 0; left: 0;
-background-color: transparent;
 padding-bottom: 20px;
 transition: .8s;
+}
+.fadeBackGround{
+	background-color: rgba(255, 255, 255, .9);
 }
 #homeDisplay{
 position: fixed;
@@ -58,9 +60,9 @@ background-position: center;
 }
 #readBoard{
 	position: fixed;
-	background-color: rgba(054, 054, 200, .8);
+	background-color: rgba(033, 033, 033, .8);
 	top: 0; right: 0; bottom: 0; left: 0;
-	padding: 30px;
+	padding: 0;
 	z-index: 201;
 	display: none;
 }
@@ -114,7 +116,7 @@ background-position: center;
 	padding: 10px;
 }
 .sectionCl{
-	padding: 50px 0;
+	padding: 80px 0;
 }
 .chaperShortDisplay{
 	display: flex;
@@ -154,7 +156,7 @@ background-position: center;
     margin: 0 1rem;
     transform: translateY(-1rem);
 }
-#contactBlock{
+#contact{
 	position: relative;
 	overflow: hidden;
 	margin-top: 0;
@@ -178,6 +180,10 @@ background-position: center;
 	color:#333;
 	line-height: 30px;
 	font-size: 18px;
+}
+.chapterContentBox p{
+	display: inline;
+	margin: 0;
 }
 .chapterContentBox:first-letter{
   text-transform: capitalize
@@ -222,4 +228,154 @@ background-position: center;
 	display: block;
 	width:100%;
 	background-color: #5454de;
+}
+#contentBoard{
+  
+}
+.bgShapeDraw{
+	background-color: #fff;
+	position: relative;
+}
+.readerTopAnnonce{
+	color:#353535;
+	font-size: 1.3em;
+	background-color: #f8f8f8;
+	text-align: center;
+	margin: 0;
+	padding: 20px;
+	border-bottom: 2px solid #efefef;
+	letter-spacing: 4px;
+	text-transform: uppercase;
+	position: relative;
+}
+#controlRightBox{
+	display: inline-block;
+	position: absolute;
+	top: 0; right: 0; bottom: 0;
+	overflow: hidden;
+	
+}
+#controlRightBox a{
+	display: inline-block;
+	top: 0; bottom: 0;
+	position: relative;
+	border-left: 1px solid #d0d0d0;
+	padding: 30px 25px;
+	font-size: 1.8em;
+	color: #c0c0c0;
+}
+.gotoLastView{
+	display: inline-block;
+	top: 0; bottom: 0; left:0;
+	position: absolute;
+	border-right: 1px solid #d0d0d0;
+	padding: 30px 25px;
+	font-size: 1.8em;
+	color: #c0c0c0;
+}
+#back-chap-lk:hover, #controlRightBox a:hover{
+	background-color: #efefef;
+}
+{
+	overflow-x: hidden;
+	overflow-y: auto;
+	position: relative;
+	background-color: #fff;
+}
+.readBoardOnlyContainer, .theContentDisplayUnikChap, .theWaitingLoaderGlobal{
+	overflow-x: hidden;
+	overflow-y: auto;
+	position: relative;
+	background-color: #fff;
+}
+.theWaitingLoaderGlobal{
+	padding: 30px;
+}
+.contentTextDisplay{
+	margin: 30px 0 50px 0;
+}
+.spaceMakerBox{
+	margin: 20px 0 0 0;
+	padding: 60px 40px 30px 40px;
+	border-bottom: 1px solid #efefef;
+}
+#readBoardChapList{
+	z-index: 200;
+	position: absolute;
+	top: 0; right: 0; left: 0;
+}
+#readBoardChapUnikReader{
+	z-index: 201;
+	position: absolute;
+	top: 0; right: 0; left: 0;
+}
+#theWaitingAnnonceBlock{
+	z-index: 202;
+	position: absolute;
+	top: 0; right: 0; left: 0;
+}
+.chapDateUnikLine{
+	color: #999;
+	font-size: 13px;
+	font-weight: normal;
+	letter-spacing: 0;
+	text-transform: none;
+}
+.chapNumberUnikLine{
+	color: #5454de;
+	font-size: 16px;
+	letter-spacing: 0;
+}
+.theContentDisplayUnikChap{
+	padding: 30px 50px;
+	font-size: 18px;
+	color:#555;
+	line-height: 35px;
+}
+#ceterShowLaterTop{
+	
+}
+#waitingAnnonceBox div, #waitingAnnonceBigBox div{
+	display: inline-block;
+	height: 10px;
+	background-color: #dedfde;
+	border-radius: 3px;
+	margin:0;
+}
+.thelineContener{
+	text-align: left;
+	position: relative;
+	overflow:hidden;
+}
+.theMiniAnnonceWait{
+	width: 30%;
+}
+.theWideAbbonceWait{
+	width: 60%;
+}
+.theHalfAnnonceWait{
+	width: 40%;
+}
+.theFullAnnonceWait{
+	width: 100%;
+}
+.topMiniComment{
+	color:#5454de;
+	font-size: 1em;
+}
+.theGlowingLine{
+	display: inline-block;
+	width: 40px;
+	background-image: linear-gradient(to right, transparent , #c0c0c0);
+	position:absolute;left: 0; top: 0; bottom: 0;
+	animation-name: glowLine;
+    animation-iteration-count: infinite;
+    animation-duration: 1s;
+}
+@keyframes glowLine{
+	from{left: 0;}
+	to{left: 100%;}
+}
+#theWaitingAnnonceBlock, #readBoardChapUnikReader, #readBoardChapList, #contentBoard{
+	display: none;
 }
