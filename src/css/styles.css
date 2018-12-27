@@ -1,5 +1,225 @@
+#header{
+position: fixed;
+z-index: 2000;
+top: 0; right: 0; left: 0;
+background-color: transparent;
+padding-bottom: 20px;
+transition: .8s;
+}
 #homeDisplay{
 position: fixed;
 top: 0; right:0; bottom: 0; left: 0;
-background-color: #f8f8f8;
+background-color: #fff;
+background-repeat: no-repeat;
+background-image: url(../images/layout/bg-all.jpg);
+background-size: cover;
+background-position: center;
+	text-align: center;
+}
+#frontDisplayLAlign{
+	display: block;
+}
+#frontDisplayLAlign li{
+	display: inline-block;
+}
+#bookCover{
+	width: 50%;
+	margin-left: 30px;
+	padding-top: 120px;
+}
+#bookCover img{
+	height: 50%;
+	width: auto;
+	display: block;
+}
+#titleBookAnnonce{
+	display: inline-block;
+}
+#titleBookLineHeader{
+	font-size: 3em;
+	text-transform: uppercase;
+	border-bottom: 1px solid #c0c0c0;
+	padding-bottom: 20px;
+	margin-top: 0;
+	margin-bottom: 0;
+	color:#565656;
+}
+#titleBookLineMiniHeader{
+	font-size: 1.5em;
+	margin-top: 15px;
+	line-height: 20px;
+}
+#reaminingDisplay{
+	position: relative;
+	overflow: hidden;
+	margin-top: 100%;
+	background-color: #f8f8f8;
+	z-index: 200;
+}
+#readBoard{
+	position: fixed;
+	background-color: rgba(054, 054, 200, .8);
+	top: 0; right: 0; bottom: 0; left: 0;
+	padding: 30px;
+	z-index: 201;
+	display: none;
+}
+#logoLk{
+	display: inline-block;
+	outline: none;
+	text-align: center;
+	float: left;
+}
+#logoLk span{
+	display: block;
+}
+.firstNameCl{
+	font-size: 3em;
+	letter-spacing: 5px;
+	color: #000;
+}
+.lastNameCl{
+	font-size: 1em;
+	letter-spacing: 2px;
+	background-color: #000;
+	color: #fff;
+	padding: 3px 5px;
+	text-transform: uppercase;
+}
+#menuContener{
+	float: right;
+	margin-top: 40px;
+}
+#menuWrapper{
+	display: inline-block;
+}
+#menuWrapper li{
+	display: inline-block;
+}
+.lkMenuCl{
+	display: block;
+	color: #333;
+	margin-left: 15px;
+	text-transform: uppercase;
+	font-size: 14px;
+}
+.lkButt{
+	display: block;
+	color: #fff;
+	margin-left: 15px;
+	text-transform: uppercase;
+	font-size: 14px;
+	border-radius: 3px;
+	background-color: #5454de;
+	padding: 10px;
+}
+.sectionCl{
+	padding: 50px 0;
+}
+.chaperShortDisplay{
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+}
+.chapterTitleBox{
+	width: 28%;
+}
+.chapterContentBox{
+	width:68%;
+}
+.chapTitleLine{
+	margin: 0 0 5px 0;
+	font-size: 1.2em;
+}
+.chapTitleLine:first-letter{
+  text-transform: capitalize
+}
+.chapDateLine{
+	margin: 10px 0 10px 0;
+	color: #999;
+	font-size: 13px;
+}
+.sectionHeadeLine {
+    font-size: 3rem;
+    color:#555;
+    text-align: center;
+    margin: 30px 0 50px 0;
+}
+.sectionHeadeLine::before,
+.sectionHeadeLine::after {
+    display: inline-block;
+    content: "";
+    border-top: .3rem solid #555;
+    width: 3rem;
+    margin: 0 1rem;
+    transform: translateY(-1rem);
+}
+#contactBlock{
+	position: relative;
+	overflow: hidden;
+	margin-top: 0;
+	background-color: #fff;
+	z-index: 200;
+	color: #fff;
+}
+.showAllChapterButtBig{
+	background-color: #5454de;
+	color: #fff;
+	padding:8px;
+	border-radius: 3px;
+	transition: .8s;
+	font-size: 15px;
+	margin-top:10px;
+	display: block;
+	width: 100%;
+	text-align: center;
+}
+.chapterContentBox{
+	color:#333;
+	line-height: 30px;
+	font-size: 18px;
+}
+.chapterContentBox:first-letter{
+  text-transform: capitalize
+}
+.shortFirstCover{
+    width: 49%;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+.LongFirstCover{
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+}
+.theLeftPartAlign{
+	margin-right: 1%;
+}
+.theRightPartAlign{
+	margin-left: 1%;
+}
+.putShapeAll{
+	width:100%;
+	display: block;
+	padding:10px;
+	border: 1px solid #dedfde;
+	outline: none;
+	font-size: 25px;
+}
+.areaShape{
+	height: 220px;
+	resize: none;
+	resize: vertical;
+}
+.butShapeGlobal{
+	padding: 15px;
+	border-radius: 3px;
+	font-size: 25px;
+	border: none;
+	text-align: center;
+	cursor: pointer;
+	color: #fff;
+	display: block;
+	width:100%;
+	background-color: #5454de;
 }

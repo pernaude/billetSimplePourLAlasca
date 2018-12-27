@@ -17,8 +17,10 @@
 <meta property="og:image"             content="<?= WEBSITE_FACEBOOK_IMAGE?>" />
 
 <!-- CSS Styles -->
-<link rel="stylesheet" href="<?= PATH?>assets/styles/css/styles.css"/>
+<link rel="stylesheet" href="<?= PATH?>src/css/default.css?v=<?= time(); ?>"/>
+<link rel="stylesheet" href="<?= PATH?>src/css/styles.css?v=<?= time(); ?>"/>
 
 
-<!-- JS Files -->
-<!--script src="/assets/js/app.js"></script-->
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css?family=Quicksand:400,700" rel="stylesheet">

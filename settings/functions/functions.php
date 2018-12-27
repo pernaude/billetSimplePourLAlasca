@@ -26,3 +26,35 @@ function crypt_pass($dateToCrypt, $passToCrypt){
 	$dategotTab = password_hash($passToCrypt, PASSWORD_DEFAULT);
 	return $dategotTab;
 }
+
+function date_rewrite($dateSent, $plusHourOrNot){
+	$monthTab = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
+	$dateConstructShow = '';
+	$tabGetFirst = explode(' ', $dateSent);
+	if(isset($tabGetFirst[0])){
+		$tabGetSecond = explode("-", $tabGetFirst[0]);
+		if(count($tabGetSecond) == 3){
+			$year = (int) $tabGetSecond[0];
+			$month = (int) $tabGetSecond[1];
+			if(isset($monthTab[$tabGetSecond[1]-1])){
+				$month = $monthTab[$tabGetSecond[1]-1];
+			}
+			$day = $tabGetSecond[2];
+			$dateConstruct = $day.' '.$month.' '.$year;
+			$dateConstructShow .= $dateConstruct;
+		}
+
+	}
+	if(isset($tabGetFirst[1])){
+		$plusHourTab = explode(':', $tabGetFirst[1]);
+		if(count($plusHourTab) >= 2){
+			$plusHour = ' à '.$plusHourTab[0].' '.(int) $plusHourTab[1];
+
+			if($plusHourOrNot == 'full'){
+				$dateConstructShow .= $plusHour;
+			}
+
+		}
+	}
+	return $dateConstructShow;
+}

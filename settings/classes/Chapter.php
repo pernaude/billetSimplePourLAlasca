@@ -155,6 +155,26 @@ class Chapter {
 		}	
 	}
 
+
+
+	static function getLastChapter(){
+		
+			try{
+
+			global $db;
+
+			$retrievedTrack = $db -> fetch('SELECT chap.* FROM chapter_set chap ORDER BY chap_id DESC LIMIT 1', [], false);
+
+
+			return $retrievedTrack;
+
+
+			}catch(PDOException $error){
+				return ($error -> getMessage());
+			
+		}	
+	}
+
 	public function getChapTitle(){
 
 		return ($this -> chapTitle);

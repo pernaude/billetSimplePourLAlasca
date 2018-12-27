@@ -17,6 +17,5 @@ list-style-type:none;
 .left{float:left;}.right{float:right;}.clear{clear:both;}.aleft{text-align:left;}.aright{text-align:right;}.acenter{text-align:center;}.justify{text-align:justify;}.pagemenu{max-width:95%;margin:0 auto;}.page{max-width:980px;margin:0 auto;}
 div{box-sizing:border-box;}
 input{
-font-family: 'Didact Gothic', sans-serif;
-font-family: 'Quattrocento Sans', sans-serif;
+font-family: 'Quicksand', sans-serif;
 }
