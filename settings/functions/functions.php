@@ -22,9 +22,8 @@ function debug($var) {
 }
 
 function crypt_pass($dateToCrypt, $passToCrypt){
-	$hashedPass =  mcrypt_create_iv($passToCrypt, MCRYPT_DEV_URANDOM);
-	$dategotTab = password_hash($passToCrypt, PASSWORD_DEFAULT);
-	return $dategotTab;
+	$traitPassWellReturn = sha1($passToCrypt);
+	return $traitPassWellReturn;
 }
 
 function date_rewrite($dateSent, $plusHourOrNot){
@@ -48,7 +47,7 @@ function date_rewrite($dateSent, $plusHourOrNot){
 	if(isset($tabGetFirst[1])){
 		$plusHourTab = explode(':', $tabGetFirst[1]);
 		if(count($plusHourTab) >= 2){
-			$plusHour = ' à '.$plusHourTab[0].' '.(int) $plusHourTab[1];
+			$plusHour = ' à '.$plusHourTab[0].':'.(int) $plusHourTab[1];
 
 			if($plusHourOrNot == 'full'){
 				$dateConstructShow .= $plusHour;

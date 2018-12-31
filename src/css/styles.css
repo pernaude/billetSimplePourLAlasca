@@ -66,6 +66,10 @@ background-position: center;
 	z-index: 201;
 	display: none;
 }
+#fadeTrapBox{
+	position: absolute;
+	top: 0; right: 0; bottom: 0; left: 0;
+}
 #logoLk{
 	display: inline-block;
 	outline: none;
@@ -269,9 +273,15 @@ background-position: center;
 	top: 0; bottom: 0; left:0;
 	position: absolute;
 	border-right: 1px solid #d0d0d0;
-	padding: 30px 25px;
-	font-size: 1.8em;
 	color: #c0c0c0;
+}
+.highDispo{
+	font-size: 1.8em;
+	padding: 30px 25px;
+}
+.miniDispoz{
+	font-size: 1.2em;
+	padding: 20px 25px;
 }
 #back-chap-lk:hover, #controlRightBox a:hover{
 	background-color: #efefef;
@@ -288,11 +298,22 @@ background-position: center;
 	position: relative;
 	background-color: #fff;
 }
+.chapNumberAssoc{
+	color: #5454de;
+	text-transform: uppercase;
+	font-size: 13px;
+	margin: 0 0 5px 0;
+	letter-spacing: 2px;
+}
 .theWaitingLoaderGlobal{
 	padding: 30px;
 }
 .contentTextDisplay{
 	margin: 30px 0 50px 0;
+	font-weight: normal;
+}
+.contentTextDisplay p{
+	font-weight: normal;
 }
 .spaceMakerBox{
 	margin: 20px 0 0 0;
@@ -377,5 +398,304 @@ background-position: center;
 	to{left: 100%;}
 }
 #theWaitingAnnonceBlock, #readBoardChapUnikReader, #readBoardChapList, #contentBoard{
+	display: none;
+}
+
+
+
+
+
+
+#messageDisplayCover{
+	background-color: rgba(255, 255, 255, 0.7);
+	position: fixed;
+	top: 0; right: 0; bottom: 0; left: 0;
+	z-index: 2005;
+	text-align: center;
+	display: none;
+}
+#messageDisplayLoad {
+    position:absolute;
+    width:100%;
+    left:0;right:0;top:0;bottom:0;
+    display: none;
+    z-index: 2015;
+}
+
+@-webkit-keyframes spin {
+	from {-webkit-transform:rotate(0deg);}
+	to {-webkit-transform:rotate(360deg);}
+}
+
+@keyframes spin {
+	from {transform:rotate(0deg);}
+	to {transform:rotate(360deg);}
+}
+@-webkit-keyframes shakeMini {
+	from {-webkit-transform:rotate(0deg);}
+	25% {-webkit-transform:rotate(5deg);}
+	50% {-webkit-transform:rotate(0deg);}
+	75% {-webkit-transform:rotate(-5deg);}
+	100% {-webkit-transform:rotate(5deg);}
+}
+
+@keyframes shakeMini {
+	from {transform:rotate(0deg);}
+	25% {transform:rotate(5deg);}
+	50% {transform:rotate(0deg);}
+	75% {transform:rotate(-5deg);}
+	100% {transform:rotate(5deg);}
+}
+#messageDisplayLoad::after, .waitingForceLoader::after {
+    content:'';
+    display:block;
+    position:absolute;
+    left:48%;top:40%;
+    width:40px;height:40px;
+    border-style:solid;
+    border-color:#0071a6;
+    border-top-color:transparent;
+    border-width: 4px;
+    border-radius:50%;
+    -webkit-animation: spin .8s linear infinite;
+    animation: spin .8s linear infinite;
+}
+#userBoxRun{
+	position: relative;
+	z-index: 2008;
+	display: none;
+	max-width:450px;
+	padding: 20px;
+	background-color: #fff;
+	border-radius: 5px;
+	box-shadow: 0 0 5px #c0c0c0;
+	color: #333;
+	margin-top: 10%;
+	text-align: left;
+	border-top: 4px solid #5454de;
+}
+#theTriggerLeave{
+	position: absolute;
+	top: 0;right: 0;bottom: 0;left: 0;
+	z-index: 2007;
+}
+.shakeBox{
+    -webkit-animation: shakeMini .5s linear;
+    animation: shakeMini .5s linear;
+}
+.userAccountCoverBox label{
+	display: block;
+	margin: 0 0 20px 0;
+}
+.errorTriggered{
+	color: #f00;
+	font-size: 13px;
+	padding: 15px;
+	text-align: center;
+	border-left: 4px solid #f00;
+	background-color: #ffb7b7;
+	margin-bottom: 15px;
+	display: none;
+}
+.noErrorTriggered{
+	color: #24a524;
+	font-size: 13px;
+	padding: 10px 15px;
+	text-align: center;
+	border-left: 4px solid #24a524;
+	background-color: #55ff97;
+	margin-bottom: 15px;
+	display: none;
+	line-height: 25px;
+}
+.closeTriggerPseudoButt{
+	background-color: #efefef;
+	border-radius: 3px;
+	padding: 5px 15px;
+	font-size: 1.2em;
+	color: #c0c0c0;
+	position: absolute;
+	right:0;
+	top: -10px;
+	display: inline-block;
+	cursor: pointer;
+}
+.putMiniShape{
+	display: block;
+	width: 100%;
+	padding: 10px;
+	color: #555;
+	outline: none;
+	font-size: 15px;
+	border: 1px solid #dedfde;
+}
+.formClTriggered > .putMiniShape{
+	max-width: 400px;
+	width: 400px;
+}
+.putMiniShape:focus{
+	border: 1px solid #a2a5a2;
+}
+.buttShapeSet{
+	color: #fff;
+	font-size: 13px;
+	padding: 10px;
+	width: 100%;
+	display: block;
+	background-color: #5454de;
+	border:none;
+	border-radius: 3px;
+	margin-bottom:5px;
+	cursor: pointer;
+}
+.topUserAnnoce{
+	font-size: 1.4em;
+	color: #777;
+	margin: 0 0 20px 0;
+	position: relative;
+}
+.subActionInFormLine{
+	margin-bottom: 10px;
+	display: inline-block;
+}
+.subActionInFormBox{
+	color: #c0c0c0;
+}
+.subActionInFormLine a{
+	display: inline-block;
+	color:#5454de;
+	font-size: 12px;
+}
+.subActionInFormLine a:hover{
+	text-decoration: underline;
+}
+#createUserBox, #recoverUserBox, #connectUserBox{
+	display: none;
+}
+.errorDisplayMini{
+	color:#f00;
+	font-size: 11px;
+	margin-top: 5px;
+	display: none;
+}
+
+
+/* Account */
+#dashboard{
+	z-index: 200;
+	position: fixed;
+	top: 0; right: 0; bottom: 0; left: 0;
+	background-color: #fff;
+	display: none;
+}
+.insideContent{
+	position: absolute;
+	top: 180px; right: 0; bottom: 0; left: 0;
+	overflow: hidden;
+	overflow-y: auto;
+	padding: 50px 0;
+}
+#topProfilHead{
+	height: 200px;
+	border: 1px solid #dedfde;
+	position: relative;
+	margin-bottom: 100px;
+	background-color: #0071a6;
+	position: relative;
+	text-align: left;
+  background-image:
+    linear-gradient(rgba(024, 100, 024,.5) 2px, transparent 2px),
+    linear-gradient(90deg, rgba(024, 100, 024,.5) 2px, transparent 2px),
+    linear-gradient(rgba(024, 100, 024,.28) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(024, 100, 024,.28) 1px, transparent 1px);
+  background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+  background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
+	color:#fff;
+	padding-left: 250px;
+	font-weight: normal;
+}
+.titleHeader{
+	color:#666;
+	font-size: 1.8em;
+	text-transform: uppercase;
+	letter-spacing: 3px;
+}
+#profilePicCover{
+	border: 1px solid #dedfde;
+	border-radius: 50%;
+	width: 200px;
+	height: 200px;
+	bottom: -50px;left: 20px;
+	display: block;
+	position: absolute;
+	margin: 0 auto;
+	background-color: #f8f8f8;
+	overflow: hidden;
+}
+#profilePicCover img{
+	height: 100%;
+	width: 100%;
+}
+.halfDisplay{
+	display: inline-block;
+	width: 48%;
+	vertical-align: top;
+}
+#pseudoContener{
+	color:#fff;
+	text-shadow: 0 0 1px #000;
+	text-transform: capitalize;
+	padding-top: 50px;
+	font-size: 2.2em;
+	margin: 20px 0 5px 0;
+}
+.lineBottomPseudo{
+	font-size: 15px;
+}
+.headerLiner{
+	color:#333;
+	font-size: 1em;
+	margin: 0 0 20px 0;
+	border-bottom: 1px solid #dedfde;
+	padding-bottom: 5px;
+}
+.theBottomContenerForUserAct{
+	min-height: 50px;
+	margin-bottom:40px;
+	background-color: #f8f8f8;
+}
+#serviceInteractions{
+	float: left;
+}
+#accountSettings{
+	float: right;
+}
+#passUpdateForm{
+    padding:20px;
+    background-color: #f8f8f8;
+}
+.spaceMakerCover{
+	min-height: 10px;
+}
+.lineCompte{
+	display: block;
+	color:#555;
+	font-size: 10px;
+	padding: 10px;
+	border-bottom: 1px solid #c0c0c0;
+}
+#connectRiquiredLine{
+	padding: 15px;
+	background-color: #f8f8f8;
+	font-size: 12px;
+	text-align: center;
+}
+.formClShaped{
+	position: relative;
+}
+.waitingForceLoader{
+	position: absolute;
+	top: 0; right: 0; bottom: 0; left: 0;
+	background-color: rgba(255,255,255, .4);
 	display: none;
 }

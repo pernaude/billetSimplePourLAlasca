@@ -11,7 +11,7 @@
     					<li class="menuUniBloc"><a href="#" class="lkMenuCl menuToFollow">Accueil</a></li>
     					<li class="menuUniBloc"><a href="#chapiters" class="lkMenuCl" id="goToChapters">Chapitres</a></li>
                         <li class="menuUniBloc"><a href="#contact" class="lkMenuCl menuToFollow" id="goToContact">Contact</a></li>
-                        <li class="menuUniBloc"><a href="#compte" class="lkButt"><i class="fas fa-user"></i> Mon compte</a></li>
+                        <li class="menuUniBloc"><a href="#compte" class="lkButt <?php if(!$redirectAccount){ ?>connectLkButt<?php }else{ ?>goToDashBord<?php } ?>"><i class="fas fa-user"></i> Mon compte</a></li>
     				</ul>
     			</nav>
     			<div class="clear"></div></div>

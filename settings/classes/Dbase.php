@@ -63,7 +63,9 @@ class Dbase{
      */
     public function fetch($request, $values = null, $all = true) {
         $results = self::exec($request, $values);
-        return ($all) ? $results->fetchAll() : $results->fetch();
+        if($all){ $returnValue = $results->fetchAll(); $this -> countRequest = $results-> rowCount(); }else{ $returnValue = $results->fetch();
+ }
+        return ($returnValue);
     }
 
     public function getCountRequest(){
