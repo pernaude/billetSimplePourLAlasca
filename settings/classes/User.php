@@ -41,7 +41,7 @@ class User{
 			$this -> dateCreatedUser = $retrievedTrack['user_date_save'];
 			$this -> firstNameUser = $retrievedTrack['user_firstname'];
 			$this -> lastNameUser = $retrievedTrack['user_lastname'];
-			$this -> picUser = $retrievedTrack['user_pic'];
+			$this -> picUser = $retrievedTrack['user_dp'];
 			$this -> fetchUserVisitedChapter($id);
 			$this -> fetchUserComments($id);
 			
@@ -98,15 +98,71 @@ class User{
         }
 
 
-
-        static function checkUser($emailGot, $pseudoGot){
+        public function updateUserPic($userPic){
         	global $db;
-        	$newEmail = false; $newPseudo = false; $errorCatch = []; $returnTab = [];
+        	$updateState = false;
+        	try{
+			$insertTrack = $db->execute('UPDATE users_set SET user_dp = ? WHERE user_id = ?', [$userPic, $this -> idUser], false);
+			$updateState = true;
+		    }catch(PDOException $error){
+			$this -> ifError = 1;
+			$this -> errorCatch = $error->getMessage();
+		    }
+
+		    return ($updateState);
+
+
+
+
+        }
+
+        static function updateUserPass($userId, $userOldOrNewPass, $justCheckPass = false){
+        	global $db;
+        	$updateState = false; $errorCatch = []; $testgo = 0;
+
+        	try{
+            
+			$insertTrack = $db->execute('SELECT user_date_save FROM users_set WHERE user_id = ?', [$userId]);
+
+			if($db -> getCountRequest() == 1){
+			    $insertTrack = $db->fetch('SELECT user_pass, user_date_save FROM users_set WHERE user_id = ?', [$userId], false);
+				$passGot = $insertTrack['user_pass'];
+				$dateGot = $insertTrack['user_date_save'];
+				$newHash = sha1($dateGot.$userOldOrNewPass.$dateGot);
+				if($justCheckPass){
+				if($passGot === $newHash){
+					$updateState = true;
+				}
+				}else{
+				$insertTrackUpdate = $db->execute('UPDATE users_set SET user_pass = ? WHERE user_id= ?', [$newHash, $userId], false);
+		    if($insertTrackUpdate){
+				$updateState = true;
+			}
+			}
+		}
+		   
+			
+		    }catch(PDOException $error){
+			$errorCatch['error'] = $error->getMessage();
+
+		    }
+
+		    return ($updateState);
+
+        }
+
+
+
+        static function checkUser($emailGot, $pseudoGot, $getIdAndmail = false){
+        	global $db;
+        	$newEmail = false; $newPseudo = false; $errorCatch = []; $returnTab = []; $idAssoc = 0; $emailAssoc = '';$thisEmail = false;
 
         	try{
 			$insertTrack = $db->execute('SELECT user_id FROM users_set WHERE user_email = ?', [$emailGot]);
 			if($db -> getCountRequest() == 0){
 				$newEmail = true;
+			}else{
+				$thisEmail = true;
 			}
 		    }catch(PDOException $error){
 			$errorCatch[] = $error->getMessage();
@@ -120,9 +176,18 @@ class User{
 		    }catch(PDOException $error){
 			$errorCatch[] = $error->getMessage();
 		    }
+
+		    if($getIdAndmail){
+		    	$coLumnChoosen = ($thisEmail) ? 'user_email' : 'user_pseudo';
+		    	$insertTrack = $db->fetch('SELECT user_id,user_email FROM users_set WHERE '.$coLumnChoosen.' = ?', [$emailGot], false);
+				$idAssoc = $insertTrack['user_id'];
+				$emailAssoc = $insertTrack['user_email'];
+		    }
 		    $returnTab['error'] = $errorCatch;
 		    $returnTab['if_new_email'] = $newEmail;
 		    $returnTab['if_new_pseudo'] = $newPseudo;
+		    $returnTab['id_assoc'] = $idAssoc;
+		    $returnTab['email_assoc'] = $emailAssoc;
             return ($returnTab);
 		}
 
@@ -130,14 +195,17 @@ class User{
 
 		static function checkCredentials($emailOrPseudoGot, $passGot, $userType){
 			global $db;
-			$userExists = false; $newPseudo = false; $errorCatch = ''; $returnTab = [];
+			$userExists = false; $newPseudo = false; $errorCatch = ''; $returnTab = ['user_exists' => false, 'user_id' => 0, 'last_connected' => 0];
 			try{
 			$insertTrack = $db->execute('SELECT user_pass, user_date_save FROM users_set WHERE (user_email = ? OR user_pseudo = ?)', [$emailOrPseudoGot, $emailOrPseudoGot]);
 			if($db -> getCountRequest() == 1){
-				$insertTrackFetch = $db->fetch('SELECT user_pass, user_date_save FROM users_set WHERE (user_email = ? OR user_pseudo = ?)', [$emailOrPseudoGot, $emailOrPseudoGot], false);
+				$insertTrackFetch = $db->fetch('SELECT user_id, user_pass, user_last_connected, user_date_save FROM users_set WHERE (user_email = ? OR user_pseudo = ?)', [$emailOrPseudoGot, $emailOrPseudoGot], false);
 				$passRetrieve = $insertTrackFetch['user_pass'];
 				$dateRetrieve = $insertTrackFetch['user_date_save'];
+				$idRetrive = $insertTrackFetch['user_id'];
+				$dateLastConnectedRetrive = $insertTrackFetch['user_last_connected'];
 				if($passRetrieve === sha1($dateRetrieve.$passGot.$dateRetrieve)){
+					$db->execute('UPDATE users_set SET user_last_connected = ? WHERE (user_email = ? OR user_pseudo = ?)', [date('Y-m-d H:i:s'), $emailOrPseudoGot, $emailOrPseudoGot], false);
 					$userExists = true;
 				}
 				
@@ -146,7 +214,8 @@ class User{
 			$errorCatch = $error->getMessage();
 
 		    }
-		    return ($userExists);
+		    $returnTab = ['user_exists' => $userExists, 'user_id' => $idRetrive, 'last_connected' => $dateLastConnectedRetrive];
+		    return ($returnTab);
 		}
 
 

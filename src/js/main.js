@@ -3,9 +3,11 @@ $(function(){
 _actualChapRequest = 0;
 _actualChapId = 0;
 _ifACtiveReader = false;
+_menuSmallDisplay = false;
 reshapeScreen();
 $(window).resize(function(){
 	reshapeScreen();
+	resetMenuForWideScreen();
 });
 $(window).scroll(function(){
 	var screenHeight = $(window).height();
@@ -16,15 +18,21 @@ $(window).scroll(function(){
     $("#header").removeClass('fadeBackGround');	
     }
 });
+$(".menuUniBloc a").click(function(){
+	resetMenuForWideScreen();
+})
 $("#back-list-lk, #fadeTrapBox").click(function(){
 	hideChaptersList();
+});
+$("#mobileMenuExpander, #logoLk").click(function(){
+	showOrHideMenuForMobile();
 });
 $("#back-chap-lk").click(function(){
 	hideChaptersList();
 	showChaptersList();
 });
 $(".chapTrackerLk").click(function(){
-	var chapIdTk = $(this).attr('id').replace(/(chap\-select\-)(last\-)?(l|r|u|c)\-/,'');
+	var chapIdTk = $(this).attr('id').replace(/(chap\-select\-)(last\-)?(l|ll|r|u|c)\-/,'');
 	$("#theWaitingAnnonceBlock").fadeIn(10);
 	sendReq('settings/ajax/modif_or_delete_chap.php?q='+chapIdTk+'&byN=0', funcAfterFetch);
 });
@@ -72,14 +80,150 @@ $("#commentAddingForm").submit(function(e){
 	sendRequestToServer(formIdTk, dataInForm);
 });
 $(".goToDashBord").click(function(){
-	openDashBoard();
 	hideChaptersList();
-})
+	openDashBoard();
+	$('html').css({'overflow-y' : 'hidden'});
 });
+$(document).on('click','.reportThisCommentLk',function(){
+	$(".sendCommentForm").slideUp(100);
+	var getTheIdOfComment = $(this).attr('id').replace('reportThisCommentLk','sendCommentForm');
+	$("#"+getTheIdOfComment).slideDown(100);
+});
+$(document).on('submit','#contactForm',function(e){
+	$(".contactErrorDisplay, .contactNoErrorDisplay").slideUp(100);
+	e.preventDefault();
+	var inputVal = false;
+	$("#contactForm .putShapeAll").each(function(ind){
+		if($(this).val().trim() == ''){
+			$(".contactErrorDisplay").slideDown(100);
+			inputVal = true;
+		}
+	});
+	if(!inputVal){
+	$(this).find('.loaderInside').fadeIn(100);	
+	var formIdTk = $(this).attr("id");
+	var dataInForm = $(this).serialize();
+	sendRequestToServer(formIdTk, dataInForm);
 
+	}
+});
+$(document).on('submit','.sendCommentForm',function(e){
+	e.preventDefault();
+	if(_getUserAct){
+	var getTheIdOfComment = parseInt($(this).attr('id').replace('sendCommentForm-',''));
+	var getReportText = $(this).find('textarea').val().trim();
+	if(getTheIdOfComment > 0 && getReportText.length > 2){
+	    $(this).find('.loaderForReportSent').css({'display':'inline-block'});
+	    $(this).parent().find('.loaderFloawSet').fadeIn(0);
+	    sendReq('settings/ajax/modif_or_delete_chap.php?reportId='+getTheIdOfComment+'&reportContent='+getReportText, sendReport);
+    }
+    }else{
+    	alert('Vous devez être connecté pour signaler un commentaire');
+    }
+
+});
+$(document).on('submit','#passUpdateForm',function(e){
+    e.preventDefault();
+	if(_getUserAct){		
+	var formIdTk = $(this).attr("id");
+	var dataInForm = $(this).serialize();
+	resetFormShape(formIdTk);
+	sendRequestToServer(formIdTk, dataInForm);
+	}
+});
+$(document).on('click', "#updatePicButt",function(e){
+	$("#pic").trigger("click");
+});
+$("#pic").change(function(e){
+	$("#picChangerForm").submit();
+	loadImg(e, "dpDisplaySrc", "picChangerForm");
+});
+$("#profilePicCover").click(function(e){
+	$("#picDisplayBox").fadeIn(100);
+});
+$(".quitTriggerBg").click(function(e){
+	$("#picDisplayBox").fadeOut(100);
+});
+$(document).on("click",".leaveReport",function(e){
+	$(".sendCommentForm").slideUp(100);
+	$(".sendCommentForm textarea").val('');
+});
+$("#picChangerForm").submit(function(e){
+	$(".waitingForceLoader").fadeIn(0);
+	var formIdTk = $(this).attr("id");
+	var dataInForm = new FormData($(this)[0]);
+	$.ajax({
+        url         : '',
+        data        : dataInForm ? dataInForm : $(this).serialize(),
+        cache       : false,
+        contentType : false,
+        processData : false,
+        type        : 'POST',
+        success     : function(data, textStatus, jqXHR){
+            // Callback code
+            var dataConvert = JSON.parse(data);
+            if(dataConvert.error == 0){
+            $("#picContainerDisplay .waitingForceLoader").hide(0);
+            $("#picContainerDisplay .annonceDoneSuccess").html('Photo changé avec succès').fadeIn(100).animate({top : "50px"}, 1000).delay(2000).fadeOut(100);
+            if(dataConvert.pic !== ''){
+            	$("#profilePicCover img").attr("src","src/images/users/squared/"+dataConvert.pic);
+            }
+        }
+    }
+    });
+	e.preventDefault();
+});
+});
+function loadImg(evt, loadBox, formIdGot) {
+    var tgt = evt.target || window.event.srcElement,
+        files = tgt.files;
+
+    // FileReader support
+    if (FileReader && files && files.length) {
+        var fr = new FileReader();
+        fr.onload = function () {
+            document.getElementById(loadBox).src = fr.result;
+        }
+        fr.readAsDataURL(files[0]);
+    }
+}
+function resetFormShape(formName){
+	$("#"+formName+" .waitingForceLoader").fadeIn(100);
+	resetForm();
+}
+function sendReport(responseGet){
+	var responseJson = JSON.parse(responseGet);
+    if(responseJson.error !== "undefined" && responseJson.report_id !== "undefined" && responseJson.error == 0 && responseJson.report_id > 0){
+    	$("#sendCommentForm-"+responseJson.report_id).find('.loaderForReportSent').css({'display':'none'});
+	    $("#sendCommentForm-"+responseJson.report_id).parent().find('.loaderFloawSet').fadeOut(0);
+	    $("#sendCommentForm-"+responseJson.report_id).find('textarea').val('');
+	    $("#nbCommentAssocOnIt").html(parseInt($("#nbCommentAssocOnIt").html())-1);
+	    $("#commentLine-"+responseJson.report_id).html("<div class='successReturnReported'>Votre remarque a bien été pris en compte</div>").fadeIn(1000).delay(3000).fadeOut(1000);
+    }
+}
+function showOrHideMenuForMobile(){
+	if(_menuSmallDisplay){
+		_menuSmallDisplay = false;
+		$("#menuWrapper").fadeOut(100);
+		$("html").css({"overflow-y":"auto"});
+	}else{
+		_menuSmallDisplay = true;
+		$("#menuWrapper").fadeIn(100);
+		$("html").css({"overflow-y":"hidden"});
+	}
+}
+function resetMenuForWideScreen(){
+	_menuSmallDisplay = false;
+	$("html").css({"overflow-y":"auto"});
+	if($(window).width() > 768){
+		$("#menuWrapper").fadeIn(100);
+	}else{
+		$("#menuWrapper").fadeOut(100);
+	}
+}
 function openDashBoard(){
+	$('html').css({"overflow-y":"auto"});
 	$("#dashboard").fadeIn(500);
-	$('html').css({'overflow':'hidden'});
 }
 function sendRequestToServer(formSetName, dataInForm){
 	$.ajax({
@@ -89,19 +233,31 @@ function sendRequestToServer(formSetName, dataInForm){
 }).done(function(response){
 	if(formSetName == 'commentAddingForm'){
 		actionAjaxComment(0, response, formSetName);
+	}else if(formSetName == 'contactForm'){
+		$("#"+formSetName).find('.loaderInside').fadeOut(100);
+		$("#"+formSetName).find('.putShapeAll').val('');
+        $(".contactNoErrorDisplay").slideDown(100);
+	}else if(formSetName == 'picChangerForm'){
+		alert(response);
+		$("#picContainerDisplay .waitingForceLoader").fadeOut(100);
 	}else{
 		actionAjaxSuite(0, response, formSetName);
 	}
 }).fail(function(data){
 	if(formSetName == 'commentAddingForm'){
 		actionAjaxComment(1, data.responseText, formSetName);
+	}else if(formSetName == 'contactForm'){
+		$("#"+formSetName).find('.loaderInside').fadeOut(100);
+		$("#"+formSetName).find('.putShapeAll').val('');
+        $("#"+formSetName).find(".contactErrorDisplay").slideDown(100);
+	}else if(formSetName == 'picChangerForm'){
+		$("#"+formSetName).find(' ~ .waitingForceLoader').fadeOut(100);
 	}else{
 		actionAjaxSuite(1, data.responseText, formSetName);
 	}
 });
 }
 function actionAjaxComment(ifError, response, formSetName){
-	alert(response);
     if(ifError == 0){
     	$("#noErrorTopComment").slideDown(100);
     	$(".waitingForceLoader").fadeOut(100);
@@ -109,6 +265,7 @@ function actionAjaxComment(ifError, response, formSetName){
     }
 	}
 function actionAjaxSuite(ifError, response, formSetName){
+	$("#"+formSetName+" .waitingForceLoader").fadeOut(100);
 	if(ifError == 0){
 	$("#"+formSetName+" .putMiniShape").val('');
 	if(formSetName == "createUserForm"){
@@ -117,6 +274,12 @@ function actionAjaxSuite(ifError, response, formSetName){
     }
     if(formSetName == "connectUserForm"){
     	window.location = "";
+    }
+    if(formSetName == "passUpdateForm"){
+    	$("#passUpdateForm .noErrorTriggered").slideDown(100);
+    }
+    if(formSetName == "recoverUserForm"){
+    	$("#"+formSetName+" .noErrorTriggered").slideDown(100);
     }
 	}else if(ifError == 1){
 		$("#"+formSetName+" .errorTriggered").slideDown(100);
@@ -220,12 +383,33 @@ function sendReq(url, callBackFunc) {
 }
 function funcAfterFetch(responseTk){
 	var responseJson = JSON.parse(responseTk); 
+	
+
 	if(responseJson.error == 0){
 		showChaptersList();
 		$("#chapNumberInside").html(responseJson.chapter.number);
 		$("#chapTitleUnik").html(responseJson.chapter.title);
 		$("#chapUnikContentLine").html(responseJson.chapter.content);
 		$("#chapDateInside").html(responseJson.chapter.date);
+		$("#nbCommentsDisplay").html('0 Commentaire');
+		if(responseJson.comments.length !== "undefined"){
+		if(responseJson.comments.length > 1){
+		$("#nbCommentsDisplay").html('<span id="nbCommentAssocOnIt">'+responseJson.comments.length+'</span> commentaires');
+	    }else if(responseJson.comments.length == 1){
+	    $("#nbCommentsDisplay").html('<span id="nbCommentAssocOnIt">'+responseJson.comments.length+'</span> commentaire');
+	    }
+	    $("#commentStream").html('');
+	    if(responseJson.comments.length > 0){
+	    	for (i in responseJson.comments) {
+	    		var commentIdActu = responseJson.comments[i]['comment_id'];
+	    		var commentAuthorActu = responseJson.comments[i]['user_pseudo'];
+	    		var commentContentActu = responseJson.comments[i]['comment_content'];
+               var commentDateActu = responseJson.comments[i]['comment_add_date'];
+               var commentDpActu = responseJson.comments[i]['user_dp'];
+               $("#commentStream").append("<div class='commentLine' id='commentLine-"+commentIdActu+"'><div class='picOnlyCoverMini'><img src='"+commentDpActu+"' alt='Photo de profil'/></div><div class='arrangeRightCommentContent'><form method= 'post' class='sendCommentForm' id='sendCommentForm-"+commentIdActu+"'><div class='loaderFloawSet'></div><textarea class='commentTextArea' name='commentTextAreaNm' placeholder='Pourquoi signalez-vous ce commentaire?'></textarea><span class='leaveReport'><i class='fas fa-arrow-left'></i></span><span class='loaderForReportSent'></span><input type='submit' class='sendCommentButt' value='Signaler le commentaire'/></form><h4 class='commentAuthorHeader'><span class='nameOnlyLine'>"+commentAuthorActu+"</span><span class='dateOnlyLine'>"+commentDateActu+"</span> &nbsp; <a href='javascript:void(0);' class='reportThisCommentLk' id='reportThisCommentLk-"+commentIdActu+"'><i class='fas fa-flag'></i> <span class='hiddenRep'>Signaler</span></a></h4><p class='commentContentSort'>"+commentContentActu+"</p></div><div class='clear'></div></div>");
+            };
+	    }
+	    }
 		$("#readBoardChapUnikReader").fadeIn(10,function(){
 			reshapeScreen();
 			$("#header").addClass('fadeBackGround');

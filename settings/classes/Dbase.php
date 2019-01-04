@@ -45,10 +45,12 @@ class Dbase{
      * @param array|null $values ( Optionnelles )
      * @return bool ( Retoune un boolean donc true ou false )
      */
-    public function execute($request, $values = array()){
+    public function execute($request, $values = array(), $countRow = true){
         try{
         $results = self::exec($request, $values);
+        if($countRow){
         $this -> countRequest = $results-> rowCount();
+        }
         return ($results) ? true : false;
     }catch(PDOException $error){
         echo $error->getMessage();

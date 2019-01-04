@@ -1,0 +1,239 @@
+@media screen and (max-width: 992px){
+	.page{
+		padding: 0 15px;
+	}
+	#titleBookLineHeader{
+		font-size: 2.5em;
+	}
+	.chapterContentBox{
+		font-size: 15px;
+	}
+	.controlLineCover{
+		position: relative;
+		background-color: #006196;
+		height: 40px;
+		border-top: 1px solid #efefef;
+		margin-top:20px;
+	}
+	.readerTopAnnonce{
+		padding: 20px 0 0 0;
+		border-bottom: 2px solid #0071a6;
+	}
+	#controlRightBox a, .gotoLastView{
+		font-size: 20px;
+		padding-top: 10px;
+		background-color: #006196;
+	}
+	#controlRightBox a{
+		border-left: 1px solid #005186;
+	}
+	#controlRightBox a:hover, .gotoLastView:hover{
+		background-color: #006196;
+	}
+	.gotoLastView{
+		border-right: 1px solid #005186;
+	}
+	.readerTopAnnonce{
+		font-size:1.2em;
+		letter-spacing: 2px;
+	}
+}
+
+
+
+@media screen and (max-width: 768px){
+	.theRightPartAlign, .theLeftPartAlign{
+		margin:0 0 20px 0;
+	}
+	.theContentDisplayUnikChap{
+		padding: 30px 15px;
+	}
+	.shortFirstCover{
+		width: 100%;
+		display: block;
+	}
+	.sectionHeadeLine{
+		font-size: 1.8em;
+		text-transform: uppercase;
+		letter-spacing: 2px;
+	}
+	.sectionHeadeLine::before,
+    .sectionHeadeLine::after {
+    	display: none;
+    }
+	#menuWrapper{
+		display: none;
+		position: fixed;
+		top: 0; right: 0; bottom: 0; left: 0;
+		background-color: #fff;
+		z-index: 50;
+		padding: 120px 0 0 0;	
+	}
+	#menuWrapper li{
+		display: block;
+		margin: 0;
+		padding: 0;
+	}
+	.menuUniBloc a{
+		display: block;
+		padding: 20px;
+		border-bottom: 1px solid #dedfde;
+		margin: 0;
+		font-size: 20px;
+		letter-spacing: 2px;
+		text-align: right;
+	}
+	.lkButt{
+		border-radius: 0;
+	}
+	#onlyMobileMenu{
+		display: block;
+		position: relative;
+		z-index: 2015;
+	}
+	#logoLk{
+		margin: 10px 0 0 0;
+	}
+	.firstNameCl{
+	    font-size: 2.3em;
+	    letter-spacing: 3px;
+	    color: #000;
+    }
+    .lastNameCl{
+	    font-size: .8em;
+	    letter-spacing: 1px;
+	    padding: 3px 5px;
+    }
+    #titleBookLineHeader{
+		font-size: 1.6em;
+		padding: 20px;
+	}
+	#titleBookLineMiniHeader{
+		font-size: 1.1em;
+	}
+	.chaperShortDisplay {
+        display: block;
+        padding: 20px;
+        border-radius: 5px;
+        background-color: #f8f8f8;
+    }
+    .showAllChapterButtBig{
+    	display: none;
+    }
+    .readBoardOnlyContainer .chaperShortDisplay{
+    	margin: 20px 15px;
+    }
+	.chapterTitleBox{
+		display: block;
+		margin-bottom: 20px;
+		width: 100%;
+	}
+	.chapterContentBox{
+		display: block;
+		width: 100%;
+	}
+	.titleHeader{
+		text-align: center;
+		font-size: 1.2em;
+	}
+	#serviceInteractions{
+		float: none;
+		clear: both;
+		display: block;
+		width: 100%;
+		margin: 10px 0 30px 0;
+	}
+	.halfDisplay{
+		display: block;
+		width: 100%;
+	}
+	#profilePicCover{
+		position: relative;
+		left: auto;
+		bottom: auto;
+		display: inline-block;
+		margin-top: 10px;
+		width: 120px;
+		height: 120px;
+	}
+	#pseudoContener{
+		padding-top: 10px;
+	}
+	#topProfilHead{
+		height: auto;
+		padding: 0;
+		text-align: center;
+	}
+	#actionAssocProfilHead{
+		position: relative;
+		margin: 10px 0 0 0;
+		display: block;
+		width: 100%;
+		text-align: center;
+		left: auto; right: auto;
+
+	}
+	.simpleSepararor{
+		display: none;
+	}
+	.subActionInFormLine{
+		display: block;
+		margin-top: 10px;
+	}
+	.picOnlyCoverMini{
+		width: 50px;
+		height: 50px;
+	}
+	.arrangeRightCommentContent,.loaderFloawSet{
+		padding-left: 60px;
+	}
+	.sendCommentForm{
+		left: 60px;
+		padding: 2px;
+	}
+	.hiddenRep{
+		display:none;
+	}
+	.nameOnlyLine{
+		display: block;
+	}
+	.dateOnlyLine{
+		margin-left: 0;
+		padding: 2px 0;
+		display: inline-block;
+	}
+	.commentAuthorHeader{
+		margin-bottom: 0;
+		line-height: 18px;
+		overflow: hidden;
+
+	}
+	.readerTopAnnonce{
+		font-size:1em;
+		letter-spacing: 1px;
+	}
+	.chapNumberUnikLine{
+		font-size: 13px;
+	}
+	.theContentDisplayUnikChap{
+		font-size: 15px;
+		line-height: 32px;
+	}
+}
+
+
+@media screen and (max-width: 550px){
+	#userBoxRun{
+		width: 96%;
+	}
+	.formClTriggered{
+		width:100%;
+	}
+	.formClTriggered  .putMiniShape{
+		max-width: 100%;
+		width: 100%;
+	}
+	.topUserAnnoce{
+		font-size: 1em;
+	}
+}

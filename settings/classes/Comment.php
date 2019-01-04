@@ -7,7 +7,7 @@
 *
 */
 
-class Chapter {
+class Comment {
 	
 	
 	private $commentId;
@@ -28,6 +28,42 @@ class Chapter {
 		
 	}
 
+     /**
+     * Retrieve all chapters
+     * @param int $chapId chapter Id
+     * @param boolean $getAllStates if want to retrieve reported and/or not reported comment
+     * @param boolean $getReported retrieve only reported or not reported
+     * @param boolean $short retrieve just the main columns
+     */
+
+	static function getAllComments($chapId, $getAllStates = false, $getReported = false, $short = false){
+		global $db;
+		$insertTrack = [];
+		try{
+			if($getAllStates){
+				$completeCondiTion = '';
+				$valuesAssoc = [$chapId];
+			}else{
+			if($getReported){
+				$completeCondiTion = " AND com.comment_if_reported = ?";
+				$valuesAssoc = [$chapId, 1];
+			}else{
+				$completeCondiTion = " AND com.comment_if_reported = ?";
+				$valuesAssoc = [$chapId, 0];
+			}
+		    }
+			if(!$short){
+				$shortLk = 'com.comment_id, com.comment_chapter, com.comment_content, com.comment_author, com.comment_add_date, user.user_pseudo, user.user_dp';
+			}else{
+				$shortLk = 'com.*';
+			}
+			$insertTrack = $db->fetch('SELECT '.$shortLk.' FROM comments_set com INNER JOIN users_set user ON com.comment_author = user.user_id WHERE com.comment_chapter = ? '.$completeCondiTion, $valuesAssoc, true);
+		}catch(PDOException $error){
+			$this -> errorCatch = 1;
+		}
+		return $insertTrack;
+	}
+
 
 
 		static function addComment($chapId, $chapNb, $content, $author, $ifSub, $subAuthor ){
@@ -41,6 +77,33 @@ class Chapter {
 
 
 
+		}
+	}
+
+	static function reportComment($commentId, $authorId, $reportContent){
+		global $db;
+		try{
+			$insertTrack = $db->execute('UPDATE comments_set SET comment_if_reported = ?, comment_reported_author = ?, comment_report_content = ? WHERE comment_id = ?', [1, $authorId, $reportContent, $commentId]);
+		}catch(PDOException $error){
+			$this -> errorCatch = 1;
+		}
+	}
+
+	static function cancelReportComment($commentId){
+		global $db;
+		try{
+			$insertTrack = $db->execute('UPDATE comments_set SET comment_if_reported = ?, comment_reported_author = ?, comment_report_content = ? WHERE comment_id = ?', [0, 0, '', $commentId]);
+		}catch(PDOException $error){
+			$this -> errorCatch = 1;
+		}
+	}
+
+	static function deleteComment($commentId){
+		global $db;
+		try{
+			$insertTrack = $db->execute('DELETE FROM comments_set WHERE comment_id = ?', [$commentId]);
+		}catch(PDOException $error){
+			$this -> errorCatch = 1;
 		}
 	}
 
