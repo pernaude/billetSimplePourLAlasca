@@ -1,4 +1,4 @@
-#header{
+#admin-header{
 	position:fixed;
 	background-color:rgba(0,0,0,0.8);
 	top:0;right:0;bottom:0;left:0;
@@ -105,8 +105,14 @@ background-color: #fff;
 	font-size: 15px;
 	outline: none;
 }
+#recoverPanelShow{
+	display: none;
+}
+.adminFormClTriggered{
+	position: relative;
+}
 .textareaShape{
-	height: 250px;
+	height: 450px;
 	resize: none;
 	resize: vertical;
 	background-color: #f8f8f8;
@@ -304,4 +310,93 @@ label{
 	padding-top: 10px;
 	border-top: 1px solid #dedfde;
 	margin-top: 20px;
+}
+.lineSHowReported{
+    border-bottom: 1px solid #dedfde;
+}
+.lineSHowReported span{
+    display: inline-block;
+}
+.commentOwnerDisplay, .chapReportedDisplay, .reporterSpDisplay{
+	font-weight: 700;
+}
+.reportContentBox{
+	color: #333;
+	padding:20px;
+	text-align: left;
+	line-height: 25px;
+	font-size: 15px;
+}
+.actionLineReportBottom{
+	padding: 10px;
+	border-top: 1px solid #ededed;
+	text-align: right;
+	background-color: #fefefe;
+}
+.actionLineReportBottom a{
+	padding: 5px 10px;
+	display: inline-block;
+	font-size: 12px;
+	border-radius: 20px;
+	color: #fff;
+}
+.deleteActionOnComment{
+	background-color: #5454de;
+}
+.bottomReportOpenerBox{
+	display: none;
+}
+.topDisplayActivity{
+	color: #555;
+	margin:50px 0 60px 0;
+	font-size: 2em;
+	font-weight: 700;
+}
+#messageDisplayActionCallbackResponse{
+	display: none;
+	top: 200px;
+	text-align: center;
+	padding: 5px 15px;
+	position: fixed;
+	left: 0; right: 0;
+	z-index: 3000;
+}
+.callBackMessageDisplay{
+	padding: 5px 15px;
+	color: #fff;
+	border-radius: 3px;
+	box-shadow: 0 1px 5px #333;
+	font-size: 15px;
+	display:none;
+}
+#callBackMessageDisplay-error{
+	background-color: #ff8377;
+}
+#callBackMessageDisplay-noerror{
+	background-color: #1ed760;
+}
+.cancelActionOnComment{
+	background-color: #de5454;
+}
+.lineDisplayReportLk{
+    background-color: #f8f8f8;
+    padding: 10px;
+    font-size: 15px;
+    display: block;
+    text-align: left;
+    color: #555;
+}
+.arrowExpandBox{
+	font-size: 17px;
+	margin-right: 20px;
+}
+
+.userBlocDisplay{
+	max-width: 400px;
+	margin: 100px auto 0 auto;
+	border-top: 4px solid #de9898;
+	border-radius: 5px;
+	overflow: hidden;
+	padding: 20px;
+	box-shadow: 0 0 5px #c0c0c0;
 }

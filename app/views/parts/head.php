@@ -18,6 +18,7 @@
 <!-- CSS Styles -->
 <link rel="stylesheet" href="<?= PATH?>src/css/default.css?v=<?= time(); ?>"/>
 <link rel="stylesheet" href="<?= PATH?>src/css/styles.css?v=<?= time(); ?>"/>
+<link rel="stylesheet" href="<?= PATH?>src/css/layout.css?v=<?= time(); ?>"/>
 <link rel="stylesheet" href="<?= PATH?>src/css/screen.css?v=<?= time(); ?>"/>
 
 

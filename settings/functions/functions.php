@@ -7,7 +7,7 @@
  */
 function str_cleaner($str) {
 	 $allowedTags='<p><strong><em><u><h1><h2><h3><h4><h5><h6><img>';
-     $allowedTags.='<li><ol><ul><span><div><br><ins><del>';
+     $allowedTags.='<li><ol><ul><div><br><ins><del>';
     return trim(strip_tags($str,$allowedTags));
 }
 

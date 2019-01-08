@@ -61,25 +61,28 @@ class Chapter {
 		
 	}
 	
-	static function checkChapterAdding($title, $chapNumber, $content, $activeUser ){
+	static function checkChapterAdding($title, $chapNumber, $content, $activeUser, $actionToDo, $chapId){
 		
-		global $db;
+		global $db; $returnValue = false;
 
 		try{
+			if($actionToDo == "a"){
 			$insertTrack = $db->execute('INSERT INTO chapter_set (chap_title, chap_number, chap_content, chap_author, chap_if_publish, chap_date_publish, chap_date_created) VALUES(?, ?, ?, ?, ?, ?, ?)', [$title, $chapNumber, $content, $activeUser, 1, date('Y-m-d H:i:s'), date('Y-m-d H:i:s')]);
+		}elseif($actionToDo == "u"){
+			$insertTrack = $db->execute('UPDATE chapter_set SET chap_title = ?, chap_number = ?, chap_content = ? WHERE chap_id = ?', [$title, $chapNumber, $content, $chapId], false);
+		}
+		$returnValue = true;
 		}catch(PDOException $error){
 			$this -> errorCatch = 1;
-
-
-
+			$returnValue = false;
 		}
 			
-			
+			return $returnValue;
 		
 	}
 
 
-	public function checkIfReadChapter($userId, $chapId){
+	static function checkIfReadChapter($userId, $chapId){
         	global $db;
 
 
@@ -87,7 +90,8 @@ class Chapter {
         	$userReadChapOrNot = $db -> execute('SELECT chap_id FROM chapter_set  WHERE chap_id = ? AND chap_visited LIKE ?', [$chapId, '%-'.$userId.'-%']);
 
 			if($db -> getCountRequest() == 0){
-			    $db -> execute('UPDATE chapter_set SET chap_visited = concat(chap_visited, ?)  WHERE chap_id = ?', ['-'.$userId.'-', $chapId]);
+			    $db -> execute('UPDATE chapter_set SET chap_visited = concat(chap_visited, ?)  WHERE chap_id = ?', ['-'.$userId.'-', $chapId], false);
+			    return true;
 		    }
 
 
@@ -148,6 +152,22 @@ class Chapter {
 				return ($error -> getMessage());
 			
 		}	
+	}
+
+	static function deleteChapter($chapId){
+		global $db; $returnThis = false;
+		try{
+			$retrievedTrack = $db -> execute('SELECT chap_id FROM chapter_set WHERE chap_id = ?', [$chapId]);
+			if($db -> getCountRequest() == 1){
+				$retrievedTrack = $db -> execute('DELETE FROM chapter_set WHERE chap_id = ?', [$chapId], false);
+				$retrievedTrackAnnex = $db -> execute('DELETE FROM comments_set WHERE comment_chapter = ?', [$chapId], false);
+				$returnThis = true;
+			}
+			
+
+		}catch(PDOException $error){}
+
+		return $returnThis;
 	}
 
 	static function getLastChapter(){

@@ -184,7 +184,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['pseudoCreateUser'])) {
          if($errorReturned == ''){
          	$dateEnrol = date('Y-m-d H:i:s');
          	$passCrypt = sha1($dateEnrol.$passCreateUser.$dateEnrol);
-         	User::saveUser('', '', '', $pseudoCreateUser, $emailCreateUser, $passCrypt, $dateEnrol);
+         	User::saveUser(0, '', '', $pseudoCreateUser, $emailCreateUser, $passCrypt, $dateEnrol);
          }
          else{
             http_response_code(400); echo $errorReturned; exit;

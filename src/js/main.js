@@ -64,20 +64,24 @@ $("#theTriggerLeave, .closeTriggerPseudoButt").click(function(){
 	$("#userBoxRun").css({"display":"none"}).removeClass('shakeBox');
 	resetFormAndInput();
 });
-$(".formClTriggered").submit(function(e){
+$(".formClTriggered, .adminFormClTriggered").submit(function(e){
 	e.preventDefault();
-	loadForUserWait();
 	var formIdTk = $(this).attr("id");
 	var dataInForm = $(this).serialize();
+	loadForUserWait(formIdTk);
     sendRequestToServer(formIdTk, dataInForm);
     resetForm();
 });
 $("#commentAddingForm").submit(function(e){
 	e.preventDefault();
+	$(".commentMessageAfter").slideUp(10);
 	$(".waitingForceLoader").fadeIn(100);
 	var formIdTk = $(this).attr("id");
 	var dataInForm = $(this).serialize();
 	sendRequestToServer(formIdTk, dataInForm);
+});
+$("#deletePicButt").click(function(){
+sendReq('settings/ajax/modif_or_delete_chap.php?actD="do"', funcafterDelete);
 });
 $(".goToDashBord").click(function(){
 	hideChaptersList();
@@ -131,6 +135,9 @@ $(document).on('submit','#passUpdateForm',function(e){
 	sendRequestToServer(formIdTk, dataInForm);
 	}
 });
+$(document).on('click', ".notConnectedButtAction",function(e){
+	alert("Vous devez être connecté pour signaler un commentaire");
+});
 $(document).on('click', "#updatePicButt",function(e){
 	$("#pic").trigger("click");
 });
@@ -149,7 +156,7 @@ $(document).on("click",".leaveReport",function(e){
 	$(".sendCommentForm textarea").val('');
 });
 $("#picChangerForm").submit(function(e){
-	$(".waitingForceLoader").fadeIn(0);
+	$("#picDisplayBox .waitingForceLoader").fadeIn(0);
 	var formIdTk = $(this).attr("id");
 	var dataInForm = new FormData($(this)[0]);
 	$.ajax({
@@ -174,6 +181,15 @@ $("#picChangerForm").submit(function(e){
 	e.preventDefault();
 });
 });
+function funcafterDelete(responseFetch){
+	if(responseFetch == "ok"){
+		$("#picContainerDisplay .waitingForceLoader").hide(0);
+            $("#picContainerDisplay .annonceDoneSuccess").html('Photo supprimée avec succès').fadeIn(100).animate({top : "50px"}, 1000).delay(2000).fadeOut(100);
+            	$("#profilePicCover img").attr("src","src/images/layout/dp.png");
+	}else{
+		$("#picContainerDisplay .annonceDoneFail").html('Action impossible actuellement').fadeIn(100).animate({top : "50px"}, 1000).delay(2000).fadeOut(100);
+	}
+}
 function loadImg(evt, loadBox, formIdGot) {
     var tgt = evt.target || window.event.srcElement,
         files = tgt.files;
@@ -238,7 +254,6 @@ function sendRequestToServer(formSetName, dataInForm){
 		$("#"+formSetName).find('.putShapeAll').val('');
         $(".contactNoErrorDisplay").slideDown(100);
 	}else if(formSetName == 'picChangerForm'){
-		alert(response);
 		$("#picContainerDisplay .waitingForceLoader").fadeOut(100);
 	}else{
 		actionAjaxSuite(0, response, formSetName);
@@ -262,6 +277,9 @@ function actionAjaxComment(ifError, response, formSetName){
     	$("#noErrorTopComment").slideDown(100);
     	$(".waitingForceLoader").fadeOut(100);
     	$("#commentSent").val('');
+    }else{
+    	$("#errorTopConnect").slideDown(100);
+    	$(".waitingForceLoader").fadeOut(100);
     }
 	}
 function actionAjaxSuite(ifError, response, formSetName){
@@ -278,7 +296,7 @@ function actionAjaxSuite(ifError, response, formSetName){
     if(formSetName == "passUpdateForm"){
     	$("#passUpdateForm .noErrorTriggered").slideDown(100);
     }
-    if(formSetName == "recoverUserForm"){
+    if(formSetName == "recoverUserForm" || formSetName == "adminRecoverUserForm"){
     	$("#"+formSetName+" .noErrorTriggered").slideDown(100);
     }
 	}else if(ifError == 1){
@@ -307,8 +325,11 @@ function resetFormAndInput(){
 	resetForm();
 	$(".putMiniShape").val('');
 }
-function loadForUserWait(){
+function loadForUserWait(formOrBoxId){
 	$("#messageDisplayLoad").fadeIn(100);
+	if(formOrBoxId.trim() !== '' && $("#"+formOrBoxId.trim()).hasClass('adminFormClTriggered')){
+        $("#"+formOrBoxId.trim()+"  > .waitingForceLoader").fadeIn(100);
+	}
 }
 function fadeLoadForUserWait(){
 	$("#messageDisplayLoad").fadeOut(100);
@@ -375,12 +396,14 @@ function sendReq(url, callBackFunc) {
   xhttp=new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
+    	alert(this.response);
       callBackFunc(this.response);
     }
  };
   xhttp.open("GET", url, true);
   xhttp.send();
 }
+
 function funcAfterFetch(responseTk){
 	var responseJson = JSON.parse(responseTk); 
 	
@@ -406,7 +429,13 @@ function funcAfterFetch(responseTk){
 	    		var commentContentActu = responseJson.comments[i]['comment_content'];
                var commentDateActu = responseJson.comments[i]['comment_add_date'];
                var commentDpActu = responseJson.comments[i]['user_dp'];
-               $("#commentStream").append("<div class='commentLine' id='commentLine-"+commentIdActu+"'><div class='picOnlyCoverMini'><img src='"+commentDpActu+"' alt='Photo de profil'/></div><div class='arrangeRightCommentContent'><form method= 'post' class='sendCommentForm' id='sendCommentForm-"+commentIdActu+"'><div class='loaderFloawSet'></div><textarea class='commentTextArea' name='commentTextAreaNm' placeholder='Pourquoi signalez-vous ce commentaire?'></textarea><span class='leaveReport'><i class='fas fa-arrow-left'></i></span><span class='loaderForReportSent'></span><input type='submit' class='sendCommentButt' value='Signaler le commentaire'/></form><h4 class='commentAuthorHeader'><span class='nameOnlyLine'>"+commentAuthorActu+"</span><span class='dateOnlyLine'>"+commentDateActu+"</span> &nbsp; <a href='javascript:void(0);' class='reportThisCommentLk' id='reportThisCommentLk-"+commentIdActu+"'><i class='fas fa-flag'></i> <span class='hiddenRep'>Signaler</span></a></h4><p class='commentContentSort'>"+commentContentActu+"</p></div><div class='clear'></div></div>");
+               acommentFormAdd = "";
+               reportToActTriggerButt = "notConnectedButtAction";
+               if(_getUserAct){
+               	    reportToActTriggerButt = "reportThisCommentLk";
+               	    acommentFormAdd = "<form method= 'post' class='sendCommentForm' id='sendCommentForm-"+commentIdActu+"'><div class='loaderFloawSet'></div><textarea class='commentTextArea' name='commentTextAreaNm' placeholder='Pourquoi signalez-vous ce commentaire?'></textarea><span class='leaveReport'><i class='fas fa-arrow-left'></i></span><span class='loaderForReportSent'></span><input type='submit' class='sendCommentButt' value='Signaler le commentaire'/></form>";
+               }
+               $("#commentStream").append("<div class='commentLine' id='commentLine-"+commentIdActu+"'><div class='picOnlyCoverMini'><img src='"+commentDpActu+"' alt='Photo de profil'/></div><div class='arrangeRightCommentContent'>"+acommentFormAdd+"<h4 class='commentAuthorHeader'><span class='nameOnlyLine'>"+commentAuthorActu+"</span><span class='dateOnlyLine'>"+commentDateActu+"</span> &nbsp; <a href='javascript:void(0);' class='"+reportToActTriggerButt+"' id='reportThisCommentLk-"+commentIdActu+"'><i class='fas fa-flag'></i> <span class='hiddenRep'>Signaler</span></a></h4><p class='commentContentSort'>"+commentContentActu+"</p></div><div class='clear'></div></div>");
             };
 	    }
 	    }
@@ -433,13 +462,13 @@ function openRequiredForm(formIndexTk){
 		$("#userBoxRun").css({"display":"inline-block"}).addClass('shakeBox');
 		break;
 		case "connect":
-		$("#createUserBox, #recoverUserBox").hide(0);
-		$("#userBoxRun, #messageDisplayCover, #connectUserBox").fadeIn(10);
+		$("#createUserBox, #recoverUserBox, #recoverPanelShow").hide(0);
+		$("#userBoxRun, #messageDisplayCover, #connectUserBox, #connectPanelShow").fadeIn(10);
 		$("#userBoxRun").css({"display":"inline-block"}).addClass('shakeBox');
 		break;
 		case "recover":
-		$("#createUserBox, #connectUserBox").hide(0);
-		$("#userBoxRun, #messageDisplayCover, #recoverUserBox").fadeIn(10);
+		$("#createUserBox, #connectUserBox, #connectPanelShow").hide(0);
+		$("#userBoxRun, #messageDisplayCover, #recoverUserBox, #recoverPanelShow").fadeIn(10);
 		$("#userBoxRun").css({"display":"inline-block"}).addClass('shakeBox');
 		break;
 	}

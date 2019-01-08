@@ -22,6 +22,7 @@
     		<div id="globalContainer">
     			<h1 class="sectionHeadeLine">Dernier chapitre</h1>
     			<div id="lastChapiter">
+                    <?php if($chapLastTitle !== NULL): ?>
     				<ul class="chaperShortDisplay">
     					<li class="chapterTitleBox">
                             <h4 class="chapNumberAssoc">Chapitre <?= $chapLastNumber; ?></h4>
@@ -31,6 +32,7 @@
     					</li>
     					<li class="chapterContentBox"><?= $chapLastContent; ?> ... <a class="showAllChapterButtShort chapTrackerLk" id="chap-select-last-r-<?= $chapLastId; ?>" href="javascript:void(0);">Lire la suite</a></li>
     				</ul>
+                <?php endif; ?>
     			</div>
     		</div></div>
     	</section>
@@ -39,7 +41,7 @@
     				<div class="contactTopDisplay">Veuillez m'envoyer toutes vos requêtes et appréciations et je vous répondrai dans les plus brefs délais.</div>
     				<div class="contactErrorDisplay">Tous les champs sont requis</div>
                     <div class="contactNoErrorDisplay">Votre message a été envoyé avec succès</div>
-    				<form id="contactForm" action="" method="post">
+    				<form id="contactForm" action="<?= 'http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']; ?>" method="post">
                         <div class="loaderInside"></div>
     					<label class="shortFirstCover theLeftPartAlign">
     						<input class="putShapeAll" type="text" name="contactName" id="contactName" placeholder="Votre nom" required/>
@@ -62,12 +64,12 @@
     			<div id="readerContainer">
     				<div class="page bgShapeDraw" id="contentBoard">
     					<div id="readBoardChapList">
-    						<h2 class="readerTopAnnonce" id="readerTopAnnonce-list">
+    						<div class="readerTopAnnonce" id="readerTopAnnonce-list">
                                 Tous les chapitres
                                 <div class="controlLineCover">
                                 <a href="javascript:void(0);" class="gotoLastView miniDispoz" id="back-list-lk"><i class="fas fa-arrow-left"></i></a>
                                 </div>
-    						</h2>
+    						</div>
     						<div class="readBoardOnlyContainer">
     							<?php foreach($allChapTab as $keytaken => $valAssocTaken): ?>
     								<ul class="chaperShortDisplay spaceMakerBox">
@@ -83,7 +85,7 @@
     						</div>
     					</div>
     					<div id="readBoardChapUnikReader">
-    						<h2 class="readerTopAnnonce" id="readerTopAnnonce-unik">
+    						<div class="readerTopAnnonce" id="readerTopAnnonce-unik">
     							<div class="centerChapAnnonceTop" id="ceterShowLaterTop">
     								<div id="chapNumberUnik" class="chapNumberUnikLine">Chapitre <span id="chapNumberInside"></span></div>
     								<div id="chapTitleUnik" class="chapTitleUnikLine"></div>
@@ -95,7 +97,7 @@
                                 <a href="javascript:void(0);" id="previous-chap-lk"><i class="fas fa-angle-left"></i></a><a href="javascript:void(0);" id="next-chap-lk"><i class="fas fa-angle-right"></i></a>
                                 </div>
                                 </div>
-    						</h2>
+    						</div>
     						<div class="theContentDisplayUnikChap">
     							<div id="chapUnikContentLine" class="contentTextDisplay"></div>
     							<div id="commentBoxShow">
@@ -110,8 +112,8 @@
                                         <?php else: ?>
                                         <form method="post" id="commentAddingForm" class="formClShaped">
                                         <div class="waitingForceLoader"></div>
-                                        <div id="noErrorTopComment" class="noErrorTriggered">Votre commentaire a été enrégistré avec succès.</div>
-                                        <div id="errorTopConnect" class="errorTriggered">Le commentaire ne peut être ajouté actuellement</div>
+                                        <div id="noErrorTopComment" class="commentMessageAfter noErrorTriggered">Votre commentaire a été enrégistré avec succès.</div>
+                                        <div id="errorTopConnect" class="commentMessageAfter errorTriggered">Le commentaire ne peut être ajouté actuellement</div>
                                         <input type="hidden" name="userComSent" id="userComSent" value="<?= $userActualId?>" />
                                         <input type="hidden" name="chapComAssoc" id="chapComAssoc" />
                                         <input type="hidden" name="chapNbComAssoc" id="chapNbComAssoc" />
@@ -125,11 +127,11 @@
     						</div>
     					</div>
     					<div id="theWaitingAnnonceBlock">
-    						<h2 class="readerTopAnnonce" id="readerTopAnnonce-wait">
+    						<div class="readerTopAnnonce" id="readerTopAnnonce-wait">
     							<div id="waitingAnnonceBox">
     								<div class="theMiniAnnonceWait thelineContener"><div class="theGlowingLine">&nbsp;</div></div><br/><div class="theWideAbbonceWait thelineContener"><div class="theGlowingLine">&nbsp;</div></div><br/><div class="theHalfAnnonceWait thelineContener"><div class="theGlowingLine">&nbsp;</div></div>
     							</div>
-    						</h2>
+    						</div>
     						<div class="theWaitingLoaderGlobal">
     							<div id="waitingAnnonceBigBox"><br/><br/>
     								<div class="theMiniAnnonceWait thelineContener"><div class="theGlowingLine">&nbsp;</div></div><br/><br/><div class="theFullAnnonceWait thelineContener"><div class="theGlowingLine">&nbsp;</div></div><br/><br/><div class="theFullAnnonceWait thelineContener"><div class="theGlowingLine">&nbsp;</div></div><br/><br/><div class="theFullAnnonceWait thelineContener"><div class="theGlowingLine">&nbsp;</div></div><br/><br/><div class="theFullAnnonceWait thelineContener"><div class="theGlowingLine">&nbsp;</div></div>
@@ -148,7 +150,7 @@
     		   <div id="userBoxRun">
     		   	<div id="connectUserBox" class="userAccountCoverBox">
     		   	<h4 class="topUserAnnoce">Connexion<span class="closeTriggerPseudoButt">&times;</span></h4>
-    		   	<form method="post" action="" class="formClTriggered" id="connectUserForm">
+    		   	<form method="post" action="<?= 'http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']; ?>" class="formClTriggered" id="connectUserForm">
     		   		<div id="noErrorTopCreate" class="noErrorTriggered">Compte créé avec succès.<br/>Vous pouvez maintenant vous connecter</div>
     		   		<div id="errorTopConnect" class="errorTriggered">Email, Pseudo ou mot de passe incorrect</div>
     		   		<label>
@@ -170,7 +172,7 @@
     		   </div>
     		   <div id="createUserBox" class="userAccountCoverBox">
     		   	<h4 class="topUserAnnoce">Créer un compte<span class="closeTriggerPseudoButt">&times;</span></h4>
-    		   	<form method="post" action="" class="formClTriggered" id="createUserForm">
+    		   	<form method="post" action="<?= 'http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']; ?>" class="formClTriggered" id="createUserForm">
     		   		<div id="errorTopCreate" class="errorTriggered">Veuillez corriger les erreurs</div>
     		   		<label>
     		   			<input type="text" class="putMiniShape" name="pseudoCreateUser" id="pseudoCreateUser" placeholder="Pseudo"/>
@@ -208,8 +210,8 @@
     		   </div>
     		   <div id="recoverUserBox" class="userAccountCoverBox">
     		   	<h4 class="topUserAnnoce">Récupération de votre mot de passe<span class="closeTriggerPseudoButt">&times;</span></h4>
-    		   	<form method="post" action="" class="formClTriggered" id="recoverUserForm">
-    		   		<div id="noErrorTopCreate" class="noErrorTriggered">Un email de confirmation vous a été envoyé par email</div>
+    		   	<form method="post" action="<?= 'http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']; ?>" class="formClTriggered" id="recoverUserForm">
+    		   		<div id="noErrorTopRecover" class="noErrorTriggered">Un email de confirmation vous a été envoyé par email</div>
     		   		<label>
     		   			<input type="text" class="putMiniShape" name="emailrecoverUser" id="emailrecoverUser" placeholder="Votre email"/>
     		   		</label>
@@ -289,11 +291,11 @@
             </div>
             <div id="picDisplayBox">
                 <div class="quitTriggerBg"></div>
-                <div id="picContainerDisplay"><div class="annonceDoneSuccess"></div>
+                <div id="picContainerDisplay"><div class="annonceDoneSuccess"></div><div class="annonceDoneFail"></div>
                     <div id="picOnlyContener"><img src="<?= $picUser; ?>" alt="Photo de profil" id="dpDisplaySrc"></div>
                     <div id="picMenuAdd"><a href="javascript:void(0);" id="updatePicButt"><i class="fas fa-pen"></i> Changer</a><a href="javascript:void(0);" id="deletePicButt"><i class="fas fa-trash-alt"></i> Supprimer</a></div>
                     <div class="waitingForceLoader"></div>
-                    <form method="post" id="picChangerForm" action="" enctype="multipart/form-data">
+                    <form method="post" id="picChangerForm" action="<?= 'http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']; ?>" enctype="multipart/form-data">
                         <input type="file" name="pic" id="pic" accept="image/*"/><input type="submit"/>
                     </form>
                 </div>
@@ -305,7 +307,7 @@
 
 
     </div>
-
+<script><?php if($redirectAccount){ ?>_getUserAct = true;<?php }else{ ?>_getUserAct = false;<?php } ?></script>
 <?php include_once 'app/views/parts/footer.php'?>
 
 </body>

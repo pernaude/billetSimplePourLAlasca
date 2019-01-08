@@ -116,6 +116,22 @@ class User{
 
         }
 
+        static function getSimpleName($userId){
+        	global $db;
+
+        	try{
+        		$getTrack = $db->fetch('SELECT user_pseudo FROM users_set WHERE user_id = ?', [$userId], false);
+
+        		if($getTrack['user_pseudo'] !== ''){
+        			return (ucfirst($getTrack['user_pseudo']));
+        		}else{
+        			return '';
+        		}
+        	}catch(PDOException $error){
+        			return '';
+        		}
+        }
+
         static function updateUserPass($userId, $userOldOrNewPass, $justCheckPass = false){
         	global $db;
         	$updateState = false; $errorCatch = []; $testgo = 0;
@@ -192,12 +208,42 @@ class User{
 		}
 
 
+        static function deleteUserPic($userId){
+        	global $db;
+			$returnValue = false; 
+			try{
+        	$retrievedTrack = $db -> execute('SELECT user_dp FROM users_set WHERE user_id = ?', [$userId]);
+        	if($db -> getCountRequest() == 1){
+        		$retrievedTrack = $db -> fetch('SELECT user_dp FROM users_set WHERE user_id = ?', [$userId], false);
+        		$userDp = $retrievedTrack['user_dp'];
+        		if($userDp !== NULL){
+        			if(trim($userDp) !== '' && file_exists('../../src/images/users/squared/'.$userDp)){
+        				unlink('../../src/images/users/squared/'.$userDp);
+        			}
+        			if(trim($userDp) !== '' && file_exists('../../src/images/users/normals/'.$userDp)){
+        				unlink('../../src/images/users/normals/'.$userDp);
+        			}
+        			$db -> execute('UPDATE users_set SET user_dp = ? WHERE user_id = ?', [NULL, $userId], false);
+        		}
+        	}
+        	$returnValue = true;
+        	}catch(PDOException $error){
+			$errorCatch = $error->getMessage();
 
+		    }
+		    return ($returnValue);
+        }
 		static function checkCredentials($emailOrPseudoGot, $passGot, $userType){
 			global $db;
 			$userExists = false; $newPseudo = false; $errorCatch = ''; $returnTab = ['user_exists' => false, 'user_id' => 0, 'last_connected' => 0];
+
+			if($userType == "ad"){
+				$completeRequest = ' AND user_role > ?';
+			}else{
+				$completeRequest = ' AND user_role = ?';
+			}
 			try{
-			$insertTrack = $db->execute('SELECT user_pass, user_date_save FROM users_set WHERE (user_email = ? OR user_pseudo = ?)', [$emailOrPseudoGot, $emailOrPseudoGot]);
+			$insertTrack = $db->execute('SELECT user_pass, user_date_save FROM users_set WHERE (user_email = ? OR user_pseudo = ?) '.$completeRequest, [$emailOrPseudoGot, $emailOrPseudoGot, 0]);
 			if($db -> getCountRequest() == 1){
 				$insertTrackFetch = $db->fetch('SELECT user_id, user_pass, user_last_connected, user_date_save FROM users_set WHERE (user_email = ? OR user_pseudo = ?)', [$emailOrPseudoGot, $emailOrPseudoGot], false);
 				$passRetrieve = $insertTrackFetch['user_pass'];

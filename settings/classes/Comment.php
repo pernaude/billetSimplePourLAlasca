@@ -36,28 +36,41 @@ class Comment {
      * @param boolean $short retrieve just the main columns
      */
 
-	static function getAllComments($chapId, $getAllStates = false, $getReported = false, $short = false){
+	static function getAllComments($byChapter = true, $getAllStates = false, $getReported = false, $chapId, $short = false){
 		global $db;
 		$insertTrack = [];
 		try{
+			if($byChapter){
+				$suiteRequest = "WHERE com.comment_chapter = ?";
+				$valuesAssoc = [$chapId];
+				$intersectLink = " AND ";
+			}else{
+				$suiteRequest = " WHERE ";
+				$valuesAssoc = [];
+				$intersectLink = "";
+			}
+			
+			
 			if($getAllStates){
 				$completeCondiTion = '';
-				$valuesAssoc = [$chapId];
+				$intersectLink = '';
 			}else{
 			if($getReported){
-				$completeCondiTion = " AND com.comment_if_reported = ?";
-				$valuesAssoc = [$chapId, 1];
+				$completeCondiTion = $intersectLink." com.comment_if_reported = ?";
+				$valuesAssoc[] = 1;
 			}else{
-				$completeCondiTion = " AND com.comment_if_reported = ?";
-				$valuesAssoc = [$chapId, 0];
+				$completeCondiTion = $intersectLink." com.comment_if_reported = ?";
+				$valuesAssoc[] = 0;
 			}
 		    }
 			if(!$short){
-				$shortLk = 'com.comment_id, com.comment_chapter, com.comment_content, com.comment_author, com.comment_add_date, user.user_pseudo, user.user_dp';
+				$shortLk = 'com.comment_id, com.comment_chapter, com.comment_chap_number, com.comment_content, com.comment_author, com.comment_report_content, com.comment_reported_author, com.comment_add_date, user.user_pseudo, user.user_dp';
 			}else{
 				$shortLk = 'com.*';
 			}
-			$insertTrack = $db->fetch('SELECT '.$shortLk.' FROM comments_set com INNER JOIN users_set user ON com.comment_author = user.user_id WHERE com.comment_chapter = ? '.$completeCondiTion, $valuesAssoc, true);
+
+			
+			$insertTrack = $db->fetch('SELECT '.$shortLk.' FROM comments_set com INNER JOIN users_set user ON com.comment_author = user.user_id '.$suiteRequest.$completeCondiTion, $valuesAssoc, true);
 		}catch(PDOException $error){
 			$this -> errorCatch = 1;
 		}
@@ -98,13 +111,37 @@ class Comment {
 		}
 	}
 
-	static function deleteComment($commentId){
+	public function deleteComment($commentId){
 		global $db;
 		try{
 			$insertTrack = $db->execute('DELETE FROM comments_set WHERE comment_id = ?', [$commentId]);
+			return true;
 		}catch(PDOException $error){
 			$this -> errorCatch = 1;
+			return false;
 		}
+	}
+
+	static function actionOnReportedComment($comId, $actOnComment){
+		global $db;
+		$returnValue = false;
+
+		
+               
+		try{
+			if($actOnComment == 'c'){
+				
+			    $insertTrack = $db->execute('UPDATE comments_set SET comment_if_reported = ?, comment_reported_author = ?, comment_report_content = ?  WHERE comment_id = ?', [0, 0, NULL, $comId], false);
+			    $returnValue = true;
+		    }if($actOnComment == 'd'){
+		    	$insertTrack = $db->execute('DELETE FROM comments_set WHERE comment_id = ?', [$comId]);
+                	$returnValue = true;
+		    }
+		}catch(PDOException $error){
+		}
+
+		return $returnValue;
+
 	}
 
 

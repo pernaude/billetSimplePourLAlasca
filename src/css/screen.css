@@ -37,6 +37,30 @@
 		font-size:1.2em;
 		letter-spacing: 2px;
 	}
+	.halfWidth{
+		display: block;
+		width: 100%;
+	}
+	.leftWrapper, .rightWrapper{
+		padding: 0;
+	}
+	.userBlocDisplay{
+	max-width: 100%;
+	margin: 150px 15px 0 15px;
+    }
+    #actualMenuShow{
+	display: inline-block;
+	font-size: 20px;
+	padding: 15px;
+	margin-top: 0;
+	border-radius: 0;
+    }
+    .chapTitleCover{
+    	float: none;
+    	clear: both;
+    	margin: 10px 0 0 0;
+    	display: block;
+    }
 }
 
 
@@ -219,6 +243,26 @@
 		font-size: 15px;
 		line-height: 32px;
 	}
+    #actualMenuShow{
+	display: block;
+	font-size: 17px;
+	padding: 13px;
+    }
+    .menusetLk {
+    padding: 15px 8px;
+    font-size: 17px;
+    margin-right: 20px;
+    }
+    .closeButtBox {
+    font-size: 50px;
+    padding-right: 50px;
+    padding-top: 20px;
+    }
+    .topDisplayActivity {
+    color: #555;
+    margin-top: 50px;
+    font-size: 1.3em;
+    }
 }
 
 

@@ -1,6 +1,6 @@
 <?php
 if(!isset($_SESSION['USER_CONNECT'])){
-header("location:../billetSimplePourLAlasca");
+header("location:../");
 }
 
 
